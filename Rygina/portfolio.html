@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rygina Mae Bolante | My Journey of Resilience and Faith</title>
+    <!-- Load Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons for aesthetic vectors -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to integrate the Inter font and set a primary color theme */
+        :root {
+            --color-primary: #a855f7;
+            /* Soft Purple/Violet-500 */
+            --color-secondary: #fcd34d;
+            /* Amber-300 */
+            --color-girly-accent: #ec4899;
+            /* Bright Rose/Pink-500 */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            /* Slate-50 - Very light grey */
+        }
+
+        /* Custom class for the scroll animation effect */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Style for the timeline dots (Desktop only) */
+        .timeline-dot {
+            background-color: var(--color-primary);
+            border: 4px solid #fff;
+            box-shadow: 0 0 0 4px #fbcfe8;
+            /* Soft pink ring */
+            transition: all 0.5s ease;
+        }
+
+        /* Hover effect for the whole timeline item (Desktop only) */
+        .timeline-item:hover .timeline-dot {
+            box-shadow: 0 0 0 4px var(--color-girly-accent);
+        }
+
+        /* Tailwind Component Styling for Tags and Cards */
+        .passion-tag {
+            /* Updated to use pink tones */
+            @apply inline-flex items-center text-sm font-medium px-3 py-1 rounded-full bg-pink-100 text-pink-700 shadow-sm transition duration-300 hover:bg-pink-200 cursor-default;
+        }
+
+        /* UPDATED: Achievement card design with pink accent */
+        .achievement-card {
+            /* Softened shadow and using pink for hover border */
+            @apply flex flex-col sm:flex-row items-center sm:items-start p-6 bg-white rounded-2xl shadow-lg transition duration-300 space-x-0 sm:space-x-4 border-b-4 border-transparent hover:border-pink-500 transform hover:scale-[1.02] hover:shadow-xl;
+        }
+
+        .achievement-card .icon-bg {
+            @apply flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center mb-4 sm:mb-0;
+        }
+
+        /* UPDATED: Contact link styling for better shadow and border feedback */
+        .contact-link {
+            @apply flex flex-col items-center justify-center p-6 bg-white rounded-xl border-2 border-gray-200 transition duration-300 hover:bg-rose-50 hover:border-pink-500 transform hover:-translate-y-1 shadow-md hover:shadow-pink-300/50;
+        }
+
+        /* NEW: Floating animation for the hero image */
+        @keyframes float-animation {
+            0% {
+                transform: translateY(0px) scale(1);
+            }
+
+            50% {
+                transform: translateY(-8px) scale(1.01);
+            }
+
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+        }
+
+        .hero-image-animate {
+            animation: float-animation 5s ease-in-out infinite;
+        }
+
+        /* Timeline adjustments for mobile/smaller screens (Enhanced responsiveness) */
+        @media (max-width: 768px) {
+            .relative>div:nth-child(1) {
+                /* Hide vertical line in the center on mobile */
+                display: none;
+            }
+
+            .left-timeline,
+            .right-timeline {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+
+            .left-timeline>div:nth-child(1),
+            .right-timeline>div:nth-child(1) {
+                /* Content box */
+                width: 100%;
+                text-align: left;
+                padding-right: 0;
+            }
+
+            /* Apply mobile content styling to cards for consistency */
+            .left-timeline>div:nth-child(3),
+            .right-timeline>div:nth-child(3) {
+                width: 100%;
+                padding-left: 0;
+                margin-top: 8px;
+            }
+
+            /* New Mobile Timeline Styling */
+            .timeline-item {
+                border-left: 2px solid var(--color-girly-accent);
+                /* Pink border on mobile */
+                padding-left: 1.5rem;
+                position: relative;
+            }
+
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: -6px;
+                top: 8px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background-color: var(--color-girly-accent);
+                border: 3px solid #fff;
+                z-index: 10;
+            }
+
+            .timeline-dot {
+                /* Ensure center dot is hidden on mobile */
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-extrabold text-pink-600 tracking-wider">Rygina Mae</h1>
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="#home"
+                    class="text-gray-600 hover:text-pink-600 transition duration-200 hover:scale-105">Home</a>
+                <a href="#about" class="text-gray-600 hover:text-pink-600 transition duration-200 hover:scale-105">About
+                    Me</a>
+                <a href="#journey" class="text-gray-600 hover:text-pink-600 transition duration-200 hover:scale-105">My
+                    Journey</a>
+                <a href="#achievements"
+                    class="text-gray-600 hover:text-pink-600 transition duration-200 hover:scale-105">Triumphs</a>
+                <a href="#contact"
+                    class="text-gray-600 hover:text-pink-600 transition duration-200 hover:scale-105">Connect</a>
+            </nav>
+            <!-- Mobile Menu Icon (Hamburger) --><button id="mobile-menu-button"
+                class="md:hidden text-gray-700 hover:text-pink-600 p-2 rounded-lg hover:bg-gray-100">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Drawer (Hidden by default) -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-gray-50/95 backdrop-blur-sm md:hidden pt-20">
+        <nav class="flex flex-col items-center space-y-6 py-8 font-semibold text-lg">
+            <a href="#home" class="text-gray-700 hover:text-pink-600 transition duration-200"
+                onclick="closeMobileMenu()">Home</a>
+            <a href="#about" class="text-gray-700 hover:text-pink-600 transition duration-200"
+                onclick="closeMobileMenu()">About Me</a>
+            <a href="#journey" class="text-gray-700 hover:text-pink-600 transition duration-200"
+                onclick="closeMobileMenu()">My Journey</a>
+            <a href="#achievements" class="text-gray-700 hover:text-pink-600 transition duration-200"
+                onclick="closeMobileMenu()">Triumphs</a>
+            <a href="#contact" class="text-gray-700 hover:text-pink-600 transition duration-200"
+                onclick="closeMobileMenu()">Connect</a>
+        </nav>
+    </div>
+
+    <main class="max-w-7xl mx-auto">
+
+        <!-- 1. Homepage (Introduction Section) - Updated with Radial Gradient and Animation -->
+        <section id="home" class="min-h-[90vh] flex items-center p-8 bg-cover bg-center rounded-b-3xl"
+            style="background-image: radial-gradient(circle at 10% 20%, #fee2e2 0%, #f0f4ff 90%);">
+            <!-- Soft pink/blue gradient -->
+
+            <div class="max-w-7xl mx-auto grid md:grid-cols-2 items-center gap-12">
+                <!-- Left: Text Content (Always visible/initial animation) -->
+                <div class="space-y-6 fade-in-section is-visible">
+                    <h2 class="text-sm font-semibold uppercase text-pink-500 tracking-[0.2em] mb-4">Rygina Mae Bolante
+                    </h2>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 leading-tight">
+                        I Carried Their Love as My Fuel
+                    </h1>
+                    <p class="text-lg sm:text-xl text-gray-600 font-medium italic">
+                        From Siomai seller to scholar, from loss to purpose — this is my story of **Resilience and
+                        Faith**.
+                    </p>
+
+                    <!-- CORRECTED PLACEMENT: Clear paragraph flow -->
+                    <p class="text-base sm:text-lg text-gray-700 mt-6">
+                        Hi, I’m Rygina Mae Bolante, born and raised in Rizal, Philippines. Life didn’t hand me an easy
+                        path — I grew up without my parents, but the unwavering love of my **Lola**, the kindness of
+                        others,
+                        and the grace of God fueled every step. Today, I’m a proud **BSBA Marketing Management
+                        graduate** and a scholar of Caritas Manila,
+                        Unbound, and Ynares Youth — living proof that dreams bloom even from hardship.
+                    </p>
+                    <!-- END CORRECTED PLACEMENT -->
+
+                    <a href="#about"
+                        class="inline-flex mt-8 items-center px-8 py-3 bg-pink-600 text-white font-semibold rounded-full shadow-xl hover:bg-pink-700 transition duration-300 transform hover:scale-[1.05] ring-4 ring-transparent hover:ring-pink-300">
+                        <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
+                        Discover My Journey
+                    </a>
+                </div>
+
+                <!-- Right: Image Placeholder (with animation) -->
+                <div class="flex justify-center md:justify-end fade-in-section">
+                    <!-- Placeholder image to represent Rygina Mae --><img
+                        src="https://placehold.co/500x500/a855f7/ffffff?text=Rygina+Mae+%7C+Graduate"
+                        alt="Rygina Mae Bolante professional portrait"
+                        onerror="this.onerror=null;this.src='https://placehold.co/500x500/4c1d95/ffffff?text=Rygina%20Mae%20Bolante'"
+                        class="rounded-full shadow-2xl object-cover w-full h-auto max-w-sm md:max-w-md ring-8 ring-pink-50/70 border-4 border-white hero-image-animate"
+                        style="aspect-ratio: 1/1;">
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. About Me Section -->
+        <section id="about" class="fade-in-section py-20 px-4 sm:px-8 lg:px-12">
+            <div class="max-w-6xl mx-auto bg-white p-8 sm:p-12 rounded-3xl shadow-2xl border-t-4 border-pink-500">
+                <!-- Pink border -->
+                <h2 class="text-4xl font-extrabold mb-4 text-gray-900 flex items-center">
+                    <i data-lucide="user" class="w-8 h-8 mr-3 text-pink-500"></i> <!-- Pink Icon -->
+                    About Me
+                </h2>
+
+                <!-- ADDED IMAGE -->
+                <div class="text-center mb-12">
+                    <img src="https://placehold.co/150x20/f472b6/ffffff?text=~%20♥%20~" alt="Decorative banner"
+                        class="mx-auto h-5 object-cover" />
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div>
+                        <ul class="space-y-4 text-lg text-gray-700">
+                            <li><strong class="text-pink-600">Full Name:</strong> Rygina Mae Bolante</li>
+                            <li><strong class="text-pink-600">Birthdate:</strong> December 4, 2003</li>
+                            <li><strong class="text-pink-600">Hometown:</strong> Sapang, Binangonan, Rizal</li>
+                            <li>
+                                <strong class="text-pink-600">Education:</strong>
+                                <ul class="list-disc pl-5 text-base mt-1 space-y-1 text-gray-600">
+                                    <li>Bachelor of Science in Business Administration – Marketing Management</li>
+                                    <li>University of Rizal System, Binangonan Campus (Batch 2025)</li>
+                                </ul>
+                            </li>
+                            <li><strong class="text-pink-600">Former Service Scholar:</strong> Caritas Manila, Unbound
+                                Foundation, Ynares Youth</li>
+                        </ul>
+
+                        <div class="mt-10">
+                            <h3 class="text-2xl font-bold text-pink-600 mb-4 flex items-center">
+                                <i data-lucide="heart-handshake" class="w-5 h-5 mr-2"></i> Passions & Advocacy:
+                            </h3>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="passion-tag"><i data-lucide="book-open" class="w-4 h-4 mr-1"></i> Education
+                                    & Learning</span>
+                                <span class="passion-tag"><i data-lucide="heart" class="w-4 h-4 mr-1"></i> Community
+                                    Service</span>
+                                <span class="passion-tag"><i data-lucide="megaphone" class="w-4 h-4 mr-1"></i> Public
+                                    Speaking</span>
+                                <span class="passion-tag"><i data-lucide="church" class="w-4 h-4 mr-1"></i>
+                                    Faith-Centered Living</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Quote Card -->
+                    <div class="flex items-center">
+                        <blockquote
+                            class="bg-rose-50 border-l-8 border-pink-500 p-8 rounded-xl shadow-inner italic text-xl text-pink-800 h-full flex flex-col justify-center">
+                            <i data-lucide="quote" class="w-6 h-6 mb-3 text-pink-600"></i>
+                            “I carried their love as my fuel — every hardship became a step closer to the woman I was
+                            meant to be. My poverty wasn't a limit; it was the foundation of my greatest strength.”
+                            <footer class="mt-4 text-right text-base font-bold text-pink-700">— Rygina Mae Bolante
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. My Journey (Timeline Section) -->
+        <section id="journey" class="fade-in-section py-20 px-4 sm:px-8 lg:px-12 bg-gray-100">
+            <h2 class="text-center text-4xl font-extrabold mb-4 text-gray-900">From Struggles to Scholarships</h2>
+
+            <!-- ADDED IMAGE -->
+            <div class="text-center mb-12">
+                <img src="https://placehold.co/150x20/f472b6/ffffff?text=~%20♥%20~" alt="Decorative banner"
+                    class="mx-auto h-5 object-cover" />
+            </div>
+
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Vertical Line (Desktop only) -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-pink-300 hidden md:block">
+                </div> <!-- Pink Line -->
+
+                <!-- Timeline Items Container -->
+                <div class="space-y-16">
+
+                    <!-- Milestone 1: Childhood Loss (Content card uses pink/rose accent) -->
+                    <div class="relative flex justify-between items-center w-full right-timeline timeline-item">
+                        <!-- Content Card (Right of the line) -->
+                        <div
+                            class="w-full md:w-1/2 md:pr-10 md:text-right p-6 bg-white rounded-xl shadow-lg transition duration-300 hover:shadow-xl">
+                            <h3 class="text-2xl font-bold text-pink-600">Early Years (Loss & Love)</h3>
+                            <p class="text-gray-700 mt-2">Lost my mother at 4, but the unwavering care and strength of
+                                my **Lola** became my anchor and motivation.</p>
+                            <p class="text-sm text-gray-500 mt-1 italic font-medium">Childhood anchored by Lola's love
+                            </p>
+                        </div>
+                        <div class="timeline-dot absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full z-10 hidden md:block">
+                        </div>
+                        <!-- Icon (Left of the line) -->
+                        <div class="w-full md:w-1/2 md:pl-10 flex items-center justify-start mt-4 md:mt-0">
+                            <div
+                                class="flex items-center text-amber-600 font-bold text-lg p-3 bg-amber-50 rounded-lg shadow-sm w-fit">
+                                <i data-lucide="package" class="w-6 h-6 mr-2"></i> Siomai Seller</div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone 2: High School -->
+                    <div class="relative flex justify-between items-center w-full left-timeline timeline-item">
+                        <!-- Icon (Right of the line) -->
+                        <div class="w-full md:w-1/2 md:pr-10 flex items-center justify-start md:justify-end">
+                            <div
+                                class="flex items-center text-red-600 font-bold text-lg p-3 bg-red-50 rounded-lg shadow-sm w-fit">
+                                <i data-lucide="school" class="w-6 h-6 mr-2"></i> Triple Scholar</div>
+                        </div>
+                        <div class="timeline-dot absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full z-10 hidden md:block">
+                        </div>
+                        <!-- Content Card (Left of the line) -->
+                        <div
+                            class="w-full md:w-1/2 md:pl-10 md:text-left p-6 bg-white rounded-xl shadow-lg transition duration-300 hover:shadow-xl mt-4 md:mt-0">
+                            <h3 class="text-2xl font-bold text-pink-600">High School Days (2018–2020)</h3>
+                            <p class="text-gray-700 mt-2">Secured my first crucial scholarships (Caritas Manila & Ynares
+                                Youth), transforming my potential into a path forward.</p>
+                            <p class="text-sm text-gray-500 mt-1 italic font-medium">Balancing studies, livelihood, and
+                                service</p>
+                        </div>
+                    </div>
+
+                    <!-- Milestone 3: College Life -->
+                    <div class="relative flex justify-between items-center w-full right-timeline timeline-item">
+                        <!-- Content Card (Right of the line) -->
+                        <div
+                            class="w-full md:w-1/2 md:pr-10 md:text-right p-6 bg-white rounded-xl shadow-lg transition duration-300 hover:shadow-xl">
+                            <h3 class="text-2xl font-bold text-pink-600">College & Service (2020–2025)</h3>
+                            <p class="text-gray-700 mt-2">Intensive studies and active community work as an Unbound
+                                Service Scholar. This era refined my character and solidified my voice in public
+                                speaking.</p>
+                            <p class="text-sm text-gray-500 mt-1 italic font-medium">Student leader and dedicated
+                                volunteer</p>
+                        </div>
+                        <div class="timeline-dot absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full z-10 hidden md:block">
+                        </div>
+                        <!-- Icon (Left of the line) -->
+                        <div class="w-full md:w-1/2 md:pl-10 flex items-center justify-start mt-4 md:mt-0">
+                            <div
+                                class="flex items-center text-green-600 font-bold text-lg p-3 bg-green-50 rounded-lg shadow-sm w-fit">
+                                <i data-lucide="handshake" class="w-6 h-6 mr-2"></i> Community Service</div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone 4: Graduation -->
+                    <div class="relative flex justify-between items-center w-full left-timeline timeline-item">
+                        <!-- Icon (Right of the line) -->
+                        <div class="w-full md:w-1/2 md:pr-10 flex items-center justify-start md:justify-end">
+                            <div
+                                class="flex items-center text-blue-600 font-bold text-lg p-3 bg-blue-50 rounded-lg shadow-sm w-fit">
+                                <i data-lucide="graduation-cap" class="w-6 h-6 mr-2"></i> Degree Achieved</div>
+                        </div>
+                        <div class="timeline-dot absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full z-10 hidden md:block">
+                        </div>
+                        <!-- Content Card (Left of the line) -->
+                        <div
+                            class="w-full md:w-1/2 md:pl-10 md:text-left p-6 bg-white rounded-xl shadow-lg transition duration-300 hover:shadow-xl mt-4 md:mt-0">
+                            <h3 class="text-2xl font-bold text-pink-600">The Triumph (2025)</h3>
+                            <p class="text-gray-700 mt-2">Graduating with a BSBA Marketing Management degree, ready to
+                                launch a career and continue to inspire and make a difference.</p>
+                            <p class="text-sm text-gray-500 mt-1 italic font-medium">Ready to serve and lead</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Achievements Section (UPDATED FOR GIRLY THEME) -->
+        <section id="achievements" class="fade-in-section py-20 px-4 sm:px-8 lg:px-12 bg-rose-50">
+            <h2 class="text-center text-4xl font-extrabold mb-4 text-gray-900">Key Achievements</h2>
+
+            <!-- Supporting Image/Visual for the theme -->
+            <div class="text-center mb-12">
+                <img src="https://placehold.co/150x20/f472b6/ffffff?text=~%20♥%20~" alt="Decorative banner"
+                    class="mx-auto h-5 object-cover" />
+            </div>
+
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <!-- Achievement Card 1 -->
+                <div class="achievement-card">
+                    <div class="icon-bg bg-pink-100"><i data-lucide="graduation-cap" class="w-6 h-6 text-pink-600"></i>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-bold text-gray-900">BSBA Graduate</h3>
+                        <p class="text-base text-gray-700">Marketing Management, URS Binangonan Campus (2025)</p>
+                    </div>
+                </div>
+
+                <!-- Achievement Card 2 -->
+                <div class="achievement-card">
+                    <div class="icon-bg bg-yellow-100"><i data-lucide="star" class="w-6 h-6 text-yellow-600"></i></div>
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-bold text-gray-900">Triple Scholar</h3>
+                        <p class="text-base text-gray-700">Caritas Manila, Ynares Youth, & Unbound Service Scholar</p>
+                    </div>
+                </div>
+
+                <!-- Achievement Card 3 -->
+                <div class="achievement-card">
+                    <div class="icon-bg bg-violet-100"><i data-lucide="mic" class="w-6 h-6 text-violet-600"></i></div>
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-bold text-gray-900">Inspirational Speaker</h3>
+                        <p class="text-base text-gray-700">Motivating youth on perseverance and faith-driven success.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Achievement Card 4 -->
+                <div class="achievement-card">
+                    <div class="icon-bg bg-green-100"><i data-lucide="file-text" class="w-6 h-6 text-green-600"></i>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-bold text-gray-900">Life Story Author</h3>
+                        <p class="text-base text-gray-700">Focus on purpose, resilience, and advocacy (Pangarap ng
+                            Ulilang Lubos).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Message or Advocacy Section (Updated with Linear Gradient) -->
+        <section id="advocacy" class="fade-in-section py-20 px-4 sm:px-8 lg:px-12 text-white"
+            style="background: linear-gradient(135deg, #a855f7, #f472b6); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);">
+            <!-- Pink/Purple Gradient -->
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-extrabold mb-4">My Why — Inspiring Through Faith and Education</h2>
+
+                <!-- ADDED IMAGE (White text for contrast) -->
+                <div class="text-center mb-12">
+                    <img src="https://placehold.co/150x20/f472b6/white?text=~%20♥%20~" alt="Decorative banner"
+                        class="mx-auto h-5 object-cover" />
+                </div>
+
+                <div class="border-4 border-white/50 p-6 sm:p-10 rounded-2xl bg-white/10 shadow-2xl">
+                    <i data-lucide="quote" class="w-10 h-10 mx-auto mb-4 text-amber-300"></i>
+                    <p class="text-xl sm:text-2xl italic font-light leading-relaxed">
+                        "I dream of becoming a voice for students who feel unseen, for youth who struggle but never stop
+                        dreaming. My mission is to remind everyone that **poverty is not the end of the story** — it’s
+                        the beginning of strength."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Contact Me / Connect Section (UPDATED UI) -->
+        <section id="contact" class="fade-in-section py-20 px-4 sm:px-8 lg:px-12">
+            <h2 class="text-center text-4xl font-extrabold mb-4 text-gray-900">Connect With Me</h2>
+
+            <!-- ADDED IMAGE -->
+            <div class="text-center mb-12">
+                <img src="https://placehold.co/150x20/f472b6/ffffff?text=~%20♥%20~" alt="Decorative banner"
+                    class="mx-auto h-5 object-cover" />
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-2xl border-t-4 border-pink-500">
+                <!-- Pink Border -->
+
+                <!-- NEW: Sub-header for context -->
+                <p class="text-center text-xl text-gray-600 mb-8 italic font-medium">
+                    Let's connect, collaborate, and share stories. I'm always open to new opportunities and inspiring
+                    conversations!
+                </p>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+
+                    <a href="mailto:example@email.com" class="contact-link group">
+                        <i data-lucide="mail" class="w-8 h-8 text-pink-600 group-hover:scale-110 transition"></i>
+                        <!-- Pink icon -->
+                        <span class="mt-2 font-semibold">Email Me</span>
+                        <span class="text-xs text-gray-500">[example@email.com]</span>
+                    </a>
+
+                    <a href="#" target="_blank" class="contact-link group">
+                        <i data-lucide="facebook" class="w-8 h-8 text-blue-600 group-hover:scale-110 transition"></i>
+                        <span class="mt-2 font-semibold">Facebook</span>
+                        <span class="text-xs text-gray-500">[Your FB link]</span>
+                    </a>
+
+                    <a href="#" target="_blank" class="contact-link group">
+                        <i data-lucide="instagram" class="w-8 h-8 text-pink-600 group-hover:scale-110 transition"></i>
+                        <!-- Pink icon -->
+                        <span class="mt-2 font-semibold">Instagram</span>
+                        <span class="text-xs text-gray-500">[Your IG handle]</span>
+                    </a>
+
+                    <a href="#" target="_blank" class="contact-link group">
+                        <i data-lucide="linkedin" class="w-8 h-8 text-cyan-700 group-hover:scale-110 transition"></i>
+                        <span class="mt-2 font-semibold">LinkedIn</span>
+                        <span class="text-xs text-gray-500">[Profile link]</span>
+                    </a>
+                </div>
+
+                <div class="mt-10 pt-6 border-t border-gray-200 text-center">
+                    <p class="text-lg text-gray-700 italic font-medium">
+                        Message me if you need motivation, a listener, or a reminder that you’re never alone. **You can
+                        do it!** ❤️
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-gray-900 text-white text-center">
+        <p class="text-sm">&copy; 2025 Rygina Mae Bolante. All rights reserved. | Built with Resilience and Faith.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // 1. Mobile Menu Toggle Logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            // Toggle menu/x icon
+            const iconElement = mobileMenuButton.querySelector('svg');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenuButton.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+            } else {
+                mobileMenuButton.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+            }
+            lucide.createIcons();
+        }
+
+        function closeMobileMenu() {
+            if (!mobileMenu.classList.contains('hidden')) {
+                toggleMobileMenu();
+            }
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+        // 2. Scroll-based Fade-In Animation (Intersection Observer API)
+        const faders = document.querySelectorAll('.fade-in-section');
+
+        // Note: The first section (#home) is set to 'is-visible' in the HTML so it appears immediately.
+        // We start observing from the second element onward.
+        const appearOptions = {
+            threshold: 0.2, // Trigger when 20% of the section is visible
+            rootMargin: "0px 0px -50px 0px" // Start observing slightly earlier
+        };
+
+        const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+                entry.target.classList.add('is-visible');
+                appearOnScroll.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            if (!fader.classList.contains('is-visible')) {
+                appearOnScroll.observe(fader);
+            }
+        });
+    </script>
+</body>
+
+</html>
