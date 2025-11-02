@@ -25,6 +25,7 @@
             background-color: #f8fafc;
             /* Slate-50 */
             overflow-x: hidden;
+            /* Prevent horizontal scrolling on small screens */
         }
 
         /* Custom class for the scroll animation effect */
@@ -87,35 +88,30 @@
             }
         }
 
-        /* Typewriter effect */
-        .typewriter {
-            overflow: hidden;
-            border-right: .15em solid var(--color-primary);
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        /* FIXED Typewriter effect - won't make text disappear */
+        .typewriter-container {
+            position: relative;
+            display: inline-block;
         }
 
-        @keyframes typing {
-            from {
-                width: 0;
-            }
-
-            to {
-                width: 100%;
-            }
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: var(--color-primary);
+            margin-left: 2px;
+            animation: blink 1s infinite;
         }
 
-        @keyframes blink-caret {
+        @keyframes blink {
 
-            from,
-            to {
-                border-color: transparent;
-            }
-
+            0%,
             50% {
-                border-color: var(--color-primary);
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
             }
         }
 
@@ -233,6 +229,132 @@
         .blob-3 {
             animation-delay: 4s;
         }
+
+        /* Tailwind Component Styling for Tags and Cards */
+        .passion-tag {
+            @apply inline-flex items-center text-sm font-medium px-3 py-1 rounded-full bg-violet-100 text-violet-700 shadow-sm transition duration-300 hover:bg-violet-200 cursor-default;
+        }
+
+        .achievement-card {
+            /* Adjusted for better mobile stacking in the original HTML */
+            @apply flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 space-y-3 border border-gray-100;
+        }
+
+        .achievement-card .icon-bg {
+            @apply flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center;
+        }
+
+        .contact-link {
+            @apply flex flex-col items-center justify-center p-4 bg-gray-50 rounded-xl border border-gray-100 transition duration-300 hover:bg-violet-50 hover:border-violet-300;
+        }
+
+        /* === Mobile Responsiveness Fixes for Timeline (MD Breakpoint and below) === */
+        @media (max-width: 768px) {
+
+            /* 1. Hide the vertical line, making the layout purely vertical */
+            .relative>div:nth-child(1) {
+                display: none !important;
+            }
+
+            /* 2. Force the timeline items to stack vertically (from the two-column flex layout) */
+            .left-timeline,
+            .right-timeline {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+
+            /* 3. Ensure all internal boxes take full width and left-align text */
+            .left-timeline>div:nth-child(1),
+            .right-timeline>div:nth-child(1) {
+                width: 100%;
+                text-align: left;
+                padding-right: 0;
+            }
+
+            .left-timeline>div:nth-child(3),
+            .right-timeline>div:nth-child(3) {
+                width: 100%;
+                padding-left: 0;
+                margin-top: 8px;
+                /* Spacing between content and icon */
+            }
+
+            /* 4. Reposition the dot for a simple left-aligned marker look on mobile */
+            .timeline-dot {
+                position: relative !important;
+                left: 0 !important;
+                margin-left: 0 !important;
+                transform: none !important;
+                margin-bottom: 1rem;
+            }
+
+            /* 5. Fix home section layout for mobile */
+            .home-content {
+                text-align: center;
+            }
+
+            .home-image {
+                margin: 0 auto;
+            }
+        }
+
+        /* Additional Mobile Responsiveness Improvements */
+        @media (max-width: 640px) {
+
+            /* Reduce padding for smaller screens */
+            .section-padding {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* Adjust font sizes for mobile */
+            .mobile-text-xl {
+                font-size: 1.25rem;
+            }
+
+            .mobile-text-lg {
+                font-size: 1.125rem;
+            }
+
+            /* Stack grid items on mobile */
+            .mobile-stack {
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Center align text on mobile */
+            .mobile-text-center {
+                text-align: center;
+            }
+
+            /* Reduce spacing on mobile */
+            .mobile-space-y-4>*+* {
+                margin-top: 1rem;
+            }
+
+            /* Fix heading sizes for mobile */
+            .responsive-heading {
+                font-size: 2rem !important;
+                line-height: 2.5rem !important;
+            }
+
+            .responsive-subheading {
+                font-size: 1.125rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .responsive-heading {
+                font-size: 1.75rem !important;
+                line-height: 2.25rem !important;
+            }
+
+            .profile-image {
+                width: 200px !important;
+                height: 200px !important;
+            }
+        }
     </style>
 </head>
 
@@ -298,7 +420,7 @@
 
     <main class="max-w-7xl mx-auto">
 
-        <!-- 1. Homepage (Introduction Section) - IMPROVED LAYOUT -->
+        <!-- 1. Homepage (Introduction Section) - FIXED LAYOUT -->
         <section id="home"
             class="fade-in-section min-h-[90vh] flex items-center justify-center p-4 sm:p-8 rounded-b-3xl gradient-bg relative overflow-hidden">
             <!-- Background blobs -->
@@ -314,15 +436,18 @@
 
             <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
                 <!-- Text Content - Left Side -->
-                <div class="space-y-6 md:space-y-8 order-2 md:order-1">
+                <div class="space-y-6 md:space-y-8 order-2 md:order-1 home-content">
                     <div class="space-y-2">
                         <h2 class="text-sm font-semibold uppercase text-violet-500 tracking-[0.2em]">Rygina Mae Bolante
                         </h2>
+                        <!-- FIXED: Typewriter effect that won't make text disappear -->
                         <h1
-                            class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight text-shadow">
+                            class="responsive-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight text-shadow">
                             I Carried Their Love <span class="gradient-text">as My Fuel</span>
+                            <span class="typewriter-cursor"></span>
                         </h1>
-                        <p class="text-lg sm:text-xl md:text-2xl text-violet-600 font-medium italic mt-2">
+                        <p
+                            class="responsive-subheading text-lg sm:text-xl md:text-2xl text-violet-600 font-medium italic mt-2">
                             My Journey of Resilience and Faith
                         </p>
                     </div>
@@ -344,7 +469,7 @@
                         </p>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-4 mt-6 md:mt-8">
+                    <div class="flex flex-col sm:flex-row gap-4 mt-6 md:mt-8 mobile-space-y-4">
                         <a href="#about"
                             class="inline-flex items-center justify-center px-6 py-3 bg-violet-600 text-white font-semibold rounded-full shadow-lg hover:bg-violet-700 transition duration-300 transform hover:scale-[1.03] pulse-animation">
                             <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
@@ -358,12 +483,15 @@
                     </div>
                 </div>
 
-                <div class="flex justify-center md:justify-end order-1 md:order-2">
+                <!-- Image Content - Right Side -->
+                <div class="flex justify-center md:justify-end order-1 md:order-2 home-image">
                     <div class="relative">
                         <div
-                            class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl floating relative z-10">
-                            <img src="capture_20251030092649338.bmp"
+                            class="profile-image w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl floating relative z-10">
+                            <!-- Placeholder Image URL for Rygina Mae Bolante -->
+                            <img src="capture_20251102080704659.bmp"
                                 alt="Rygina Mae Bolante - BSBA Marketing Management Graduate"
+                                onerror="this.onerror=null;this.src='https://placehold.co/800x800/8b5cf6/ffffff?text=Profile+Image';"
                                 class="w-full h-full object-cover">
                         </div>
 
@@ -390,9 +518,6 @@
                     </div>
                 </div>
             </div>
-            </div>
-            </div>
-            </div>
             <!-- Shape Divider -->
             <div class="custom-shape-divider-bottom-1709226683">
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
@@ -405,14 +530,14 @@
         </section>
 
         <!-- 2. About Me Section -->
-        <section id="about" class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12">
+        <section id="about" class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12 section-padding">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
                     <p class="text-lg text-gray-600 max-w-2xl mx-auto">Get to know the person behind the journey</p>
                 </div>
 
-                <div class="grid lg:grid-cols-3 gap-8">
+                <div class="grid lg:grid-cols-3 gap-8 mobile-stack">
                     <!-- Personal Info Card -->
                     <div class="bg-white p-8 rounded-2xl shadow-xl card-hover">
                         <h3 class="text-xl font-bold mb-6 text-violet-600 flex items-center">
@@ -499,7 +624,7 @@
         </section>
 
         <!-- 3. My Journey (Timeline Section) -->
-        <section id="journey" class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12 bg-gray-50">
+        <section id="journey" class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12 bg-gray-50 section-padding">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">From Struggles to Scholarships</h2>
@@ -508,7 +633,7 @@
                 </div>
 
                 <div class="relative max-w-4xl mx-auto">
-                    <!-- Vertical Line -->
+                    <!-- Vertical Line (Hidden on mobile by custom CSS) -->
                     <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-violet-300"></div>
 
                     <!-- Timeline Items -->
@@ -516,7 +641,7 @@
 
                         <!-- Milestone 1: Childhood Loss -->
                         <div class="relative flex justify-between items-center w-full right-timeline timeline-item">
-                            <div class="w-1/2 pr-10 text-right">
+                            <div class="w-1/2 pr-10 md:text-right">
                                 <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
                                     <h3 class="text-2xl font-semibold text-violet-600">Early Years</h3>
                                     <p class="text-gray-600 mt-2">Lost my mother at 4, but gained strength and
@@ -526,7 +651,7 @@
                                 </div>
                             </div>
                             <div class="timeline-dot absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full"></div>
-                            <div class="w-1/2 pl-10">
+                            <div class="w-1/2 md:pl-10">
                                 <!-- Placeholder for 'selling siomai' photo/icon -->
                                 <div
                                     class="flex items-center justify-center text-amber-500 font-bold text-lg bg-amber-50 p-4 rounded-xl">
@@ -537,7 +662,7 @@
 
                         <!-- Milestone 2: High School -->
                         <div class="relative flex justify-between items-center w-full left-timeline timeline-item">
-                            <div class="w-1/2 pr-10">
+                            <div class="w-1/2 md:pr-10">
                                 <!-- Placeholder for 'empty pockets' photo/icon -->
                                 <div
                                     class="flex items-center justify-center text-gray-500 font-bold text-lg bg-gray-100 p-4 rounded-xl">
@@ -545,7 +670,7 @@
                                 </div>
                             </div>
                             <div class="timeline-dot absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full"></div>
-                            <div class="w-1/2 pl-10 text-left">
+                            <div class="w-1/2 pl-10 md:text-left">
                                 <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
                                     <h3 class="text-2xl font-semibold text-violet-600">High School Days (2018–2020)</h3>
                                     <p class="text-gray-600 mt-2">High school days with empty pockets but a full heart.
@@ -558,7 +683,7 @@
 
                         <!-- Milestone 3: College Life -->
                         <div class="relative flex justify-between items-center w-full right-timeline timeline-item">
-                            <div class="w-1/2 pr-10 text-right">
+                            <div class="w-1/2 pr-10 md:text-right">
                                 <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
                                     <h3 class="text-2xl font-semibold text-violet-600">College & Service (2020–2025)
                                     </h3>
@@ -569,7 +694,7 @@
                                 </div>
                             </div>
                             <div class="timeline-dot absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full"></div>
-                            <div class="w-1/2 pl-10">
+                            <div class="w-1/2 md:pl-10">
                                 <!-- Placeholder for 'volunteering' photo/icon -->
                                 <div
                                     class="flex items-center justify-center text-red-500 font-bold text-lg bg-red-50 p-4 rounded-xl">
@@ -580,7 +705,7 @@
 
                         <!-- Milestone 4: Graduation -->
                         <div class="relative flex justify-between items-center w-full left-timeline timeline-item">
-                            <div class="w-1/2 pr-10">
+                            <div class="w-1/2 md:pr-10">
                                 <!-- Placeholder for 'graduation' photo/icon -->
                                 <div
                                     class="flex items-center justify-center text-green-600 font-bold text-lg bg-green-50 p-4 rounded-xl">
@@ -588,7 +713,7 @@
                                 </div>
                             </div>
                             <div class="timeline-dot absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full"></div>
-                            <div class="w-1/2 pl-10 text-left">
+                            <div class="w-1/2 pl-10 md:text-left">
                                 <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
                                     <h3 class="text-2xl font-semibold text-violet-600">The Triumph (2025)</h3>
                                     <p class="text-gray-600 mt-2">Now: a proud BSBA Marketing Management graduate ready
@@ -605,18 +730,19 @@
         </section>
 
         <!-- 4. Achievements Section -->
-        <section id="achievements" class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12">
+        <section id="achievements" class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12 section-padding">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">Key Achievements</h2>
                     <p class="text-lg text-gray-600 max-w-2xl mx-auto">Milestones that shaped my journey</p>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Grid handles responsive collapsing: 4-col desktop, 2-col tablet/small desktop, 1-col mobile -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mobile-stack">
                     <!-- Achievement Card 1 -->
-                    <div class="achievement-card card-hover flex-col text-center p-6">
-                        <div class="icon-bg bg-violet-100 mb-4 mx-auto"><i data-lucide="award"
-                                class="w-8 h-8 text-violet-600"></i></div>
+                    <div class="achievement-card">
+                        <div class="icon-bg bg-violet-100"><i data-lucide="award" class="w-8 h-8 text-violet-600"></i>
+                        </div>
                         <div>
                             <h3 class="text-xl font-semibold text-gray-900">BSBA Marketing Management Graduate</h3>
                             <p class="text-gray-600 mt-2">University of Rizal System, Binangonan Campus</p>
@@ -624,9 +750,9 @@
                     </div>
 
                     <!-- Achievement Card 2 -->
-                    <div class="achievement-card card-hover flex-col text-center p-6">
-                        <div class="icon-bg bg-amber-100 mb-4 mx-auto"><i data-lucide="star"
-                                class="w-8 h-8 text-amber-600"></i></div>
+                    <div class="achievement-card">
+                        <div class="icon-bg bg-amber-100"><i data-lucide="star" class="w-8 h-8 text-amber-600"></i>
+                        </div>
                         <div>
                             <h3 class="text-xl font-semibold text-gray-900">Triple Scholar Status</h3>
                             <p class="text-gray-600 mt-2">Caritas Manila, Ynares Youth, & Unbound Service Scholar
@@ -635,9 +761,9 @@
                     </div>
 
                     <!-- Achievement Card 3 -->
-                    <div class="achievement-card card-hover flex-col text-center p-6">
-                        <div class="icon-bg bg-red-100 mb-4 mx-auto"><i data-lucide="megaphone"
-                                class="w-8 h-8 text-red-600"></i></div>
+                    <div class="achievement-card">
+                        <div class="icon-bg bg-red-100"><i data-lucide="megaphone" class="w-8 h-8 text-red-600"></i>
+                        </div>
                         <div>
                             <h3 class="text-xl font-semibold text-gray-900">Inspirational Speaker</h3>
                             <p class="text-gray-600 mt-2">Engaging youth and community events on perseverance and faith.
@@ -646,9 +772,8 @@
                     </div>
 
                     <!-- Achievement Card 4 -->
-                    <div class="achievement-card card-hover flex-col text-center p-6">
-                        <div class="icon-bg bg-green-100 mb-4 mx-auto"><i data-lucide="file-text"
-                                class="w-8 h-8 text-green-600"></i>
+                    <div class="achievement-card">
+                        <div class="icon-bg bg-green-100"><i data-lucide="file-text" class="w-8 h-8 text-green-600"></i>
                         </div>
                         <div>
                             <h3 class="text-xl font-semibold text-gray-900">"Pangarap ng Ulilang Lubos"</h3>
@@ -662,7 +787,7 @@
 
         <!-- 5. Message or Advocacy Section -->
         <section id="advocacy"
-            class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12 bg-violet-600 text-white relative overflow-hidden">
+            class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12 bg-violet-600 text-white relative overflow-hidden section-padding">
             <!-- Background pattern -->
             <div class="absolute inset-0 opacity-10">
                 <div class="absolute top-0 left-0 w-72 h-72 bg-white rounded-full -translate-x-1/2 -translate-y-1/2">
@@ -683,7 +808,7 @@
                     </p>
                 </div>
 
-                <div class="mt-12 grid md:grid-cols-3 gap-6">
+                <div class="mt-12 grid md:grid-cols-3 gap-6 mobile-stack">
                     <div class="bg-white/10 p-6 rounded-xl backdrop-blur-sm">
                         <i data-lucide="heart" class="w-10 h-10 mx-auto mb-4 text-amber-300"></i>
                         <h3 class="text-xl font-semibold mb-2">Empowerment</h3>
@@ -704,14 +829,14 @@
         </section>
 
         <!-- 6. Contact Me / Connect Section -->
-        <section id="contact" class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12">
+        <section id="contact" class="fade-in-section py-16 md:py-20 px-4 sm:px-8 lg:px-12 section-padding">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">Connect With Me</h2>
                     <p class="text-lg text-gray-600 max-w-2xl mx-auto">Let's inspire and empower together</p>
                 </div>
 
-                <div class="grid lg:grid-cols-2 gap-12">
+                <div class="grid lg:grid-cols-2 gap-12 mobile-stack">
                     <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 card-hover">
                         <h3 class="text-2xl font-bold mb-6 text-violet-600">Get In Touch</h3>
                         <p class="text-gray-700 mb-6">
@@ -719,7 +844,7 @@
                             here to share my journey and inspire others to pursue their dreams despite challenges.
                         </p>
 
-                        <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="grid sm:grid-cols-2 gap-6 mobile-stack">
                             <a href="mailto:example@email.com" class="contact-link group p-4">
                                 <i data-lucide="mail"
                                     class="w-8 h-8 text-violet-600 group-hover:scale-110 transition"></i>
@@ -772,7 +897,7 @@
     <!-- Footer -->
     <footer class="py-12 bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-3 gap-8 mobile-stack">
                 <div>
                     <h3 class="text-xl font-bold mb-4">Rygina Mae Bolante</h3>
                     <p class="text-gray-400">Inspiring through resilience, faith, and education.</p>
@@ -820,12 +945,16 @@
 
         function toggleMobileMenu() {
             mobileMenu.classList.toggle('hidden');
+            // Toggle icon from menu to close
             const iconElement = mobileMenuButton.querySelector('svg');
             if (mobileMenu.classList.contains('hidden')) {
-                iconElement.setAttribute('data-lucide', 'menu');
+                // Remove existing icon element
+                iconElement.parentNode.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
             } else {
-                iconElement.setAttribute('data-lucide', 'x');
+                // Remove existing icon element
+                iconElement.parentNode.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
             }
+            // Re-create icons to render the new one
             lucide.createIcons();
         }
 
@@ -856,82 +985,38 @@
         }, appearOptions);
 
         faders.forEach(fader => {
-            appearOnScroll.observe(fader);
+            // Immediately show the first section (Home) on load
+            if (fader.id === 'home') {
+                fader.classList.add('is-visible');
+            } else {
+                appearOnScroll.observe(fader);
+            }
         });
 
-        // 3. Add typewriter effect to the main heading
-        document.addEventListener('DOMContentLoaded', function () {
-            const mainHeading = document.querySelector('#home h1');
-            const originalText = mainHeading.textContent;
-            mainHeading.textContent = '';
-            mainHeading.classList.add('typewriter');
+        // 3. FIXED: Simple cursor animation instead of problematic typewriter
+        // This won't make text disappear
 
-            // Reset after animation completes
-            setTimeout(() => {
-                mainHeading.classList.remove('typewriter');
-                mainHeading.textContent = originalText;
-            }, 4000);
+        // 4. Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                }
+            });
         });
     </script>
-
-    <!-- Tailwind Component Styling for Tags and Cards -->
-    <style>
-        .passion-tag {
-            @apply inline-flex items-center text-sm font-medium px-3 py-1 rounded-full bg-violet-100 text-violet-700 shadow-sm transition duration-300 hover:bg-violet-200 cursor-default;
-        }
-
-        .achievement-card {
-            @apply flex items-start p-5 bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 space-x-4 border border-gray-100;
-        }
-
-        .achievement-card .icon-bg {
-            @apply flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center;
-        }
-
-        .contact-link {
-            @apply flex flex-col items-center justify-center p-4 bg-gray-50 rounded-xl border border-gray-100 transition duration-300 hover:bg-violet-50 hover:border-violet-300;
-        }
-
-        /* Timeline adjustments for mobile/smaller screens */
-        @media (max-width: 768px) {
-            .relative>div:nth-child(1) {
-                /* Hide vertical line on mobile */
-                display: none;
-            }
-
-            .left-timeline,
-            .right-timeline {
-                display: block;
-                /* Stack items */
-                width: 100%;
-                padding: 0;
-            }
-
-            .left-timeline>div:nth-child(1),
-            .right-timeline>div:nth-child(1) {
-                /* Content box */
-                width: 100%;
-                text-align: left;
-                padding-right: 0;
-            }
-
-            .left-timeline>div:nth-child(3),
-            .right-timeline>div:nth-child(3) {
-                /* Icon/Placeholder box */
-                width: 100%;
-                padding-left: 0;
-                margin-top: 8px;
-            }
-
-            .timeline-dot {
-                /* Move dot to the left for mobile */
-                left: 0;
-                top: 0;
-                margin-left: -1px;
-                transform: translateX(-50%);
-            }
-        }
-    </style>
 </body>
 
 </html>
